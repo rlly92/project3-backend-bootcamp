@@ -11,7 +11,7 @@ class UsersRouter {
     router.get("/", this.controller.getAll.bind(this.controller));
     router.get(
       "/:userID",
-      this.checkJwt,
+      // this.checkJwt,
       this.controller.getOneUser.bind(this.controller)
     );
 

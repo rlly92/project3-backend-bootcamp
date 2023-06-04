@@ -1,16 +1,14 @@
 "use strict";
-
 const { Model } = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
-  class Users extends Model {
+  class Reviews extends Model {
     static associate(models) {
       // define association here
-      Users.hasMany(models.listings);
-      Users.hasMany(models.reviews);
+      Reviews.belongsTo(models.listings);
+      Reviews.belongsTo(models.users);
     }
   }
-  Users.init(
+  Reviews.init(
     {
       id: {
         allowNull: false,
@@ -18,31 +16,31 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      email: {
+      author_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
+      content: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      password: {
+      star_rating: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
-      first_name: {
+      listing_id: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        references: {
+          model: "listings",
+          key: "id",
+        },
       },
-      last_name: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      phone_number: {
-        type: DataTypes.STRING,
-      },
-      buyer_address: {
-        type: DataTypes.STRING,
-      },
-      seller_address: {
-        type: DataTypes.STRING,
-      },
+
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -54,9 +52,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "users",
+      modelName: "reviews",
       underscored: true,
     }
   );
-  return Users;
+  return Reviews;
 };
