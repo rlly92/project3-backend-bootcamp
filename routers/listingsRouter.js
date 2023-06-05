@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 class ListingsRouter {
-  constructor(controller) {
+  constructor(controller, checkJwt) {
     this.controller = controller;
-    // this.checkJwt = checkJwt;
+    this.checkJwt = checkJwt;
   }
 
   routes() {
+    router.use(this.checkJwt);
     router.get("/", this.controller.getAllListings.bind(this.controller));
     router.post(
       "/:seller_id",
-      // this.checkJwt,
       this.controller.createListing.bind(this.controller)
     );
 
