@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
-class UsersRouter {
+class ListingsRouter {
   constructor(controller) {
     this.controller = controller;
     // this.checkJwt = checkJwt;
   }
 
   routes() {
-    router.get("/", this.controller.getAll.bind(this.controller));
-    router.get(
-      "/:userID",
+    router.get("/", this.controller.getAllListings.bind(this.controller));
+    router.post(
+      "/:seller_id",
       // this.checkJwt,
-      this.controller.getOneUser.bind(this.controller)
+      this.controller.createListing.bind(this.controller)
     );
 
     return router;
   }
 }
 
-module.exports = UsersRouter;
+module.exports = ListingsRouter;

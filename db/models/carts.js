@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Carts.hasMany(models.listings);
+      Carts.belongsTo(models.users);
     }
   }
   Carts.init(
@@ -36,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
           model: "users",
           key: "id",
         },
+      },
+      status: {
+        allowNull: false,
+        type: DataTypes.STRING,
       },
       created_at: {
         type: DataTypes.DATE,

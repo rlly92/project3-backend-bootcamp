@@ -5,7 +5,9 @@ class BaseController {
 
   async getAll(req, res) {
     try {
-      const output = await this.model.findAll();
+      const output = await this.model.findAll({
+        // include: this.listingsModel,
+      });
       return res.json(output);
     } catch (err) {
       console.log(err);

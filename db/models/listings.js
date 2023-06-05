@@ -26,14 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      buyer_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-      },
+
       seller_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -54,10 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      shipping_cost: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
+
       shipping_detail: {
         allowNull: false,
         type: DataTypes.STRING,
