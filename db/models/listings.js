@@ -2,17 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Listings extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
-      Listings.belongsTo(models.carts);
+
+      // Listings.belongsTo(models.carts);
       Listings.belongsTo(models.users);
-      Listings.hasMany(models.photos);
-      Listings.hasMany(models.reviews);
+      // Listings.hasMany(models.photos);
+      // Listings.hasMany(models.reviews);
       Listings.belongsToMany(models.categories, {
         through: "listings_categories",
       });
@@ -27,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
 
-      seller_id: {
+      user_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
@@ -54,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       sku_number: {
         allowNull: false,
+
         type: DataTypes.STRING,
       },
       quantity: {

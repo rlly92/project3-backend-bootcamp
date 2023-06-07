@@ -12,23 +12,30 @@ const checkJwt = auth({
 // importing Routers
 const UsersRouter = require("./routers/usersRouter");
 const ListingsRouter = require("./routers/listingsRouter");
+const CategoriesRouter = require("./routers/categoriesRouter");
 
 // importing Controllers
 const UsersController = require("./controllers/usersController");
 const ListingsController = require("./controllers/listingsController");
+const CategoriesController = require("./controllers/categoriesController");
 
 // importing DB
 const db = require("./db/models/index");
-const { users, listings } = db;
+const { users, listings, categories } = db;
 
 // initializing Controllers -> note the lowercase for the first word
 const usersController = new UsersController(users);
 const listingsController = new ListingsController(listings);
+const categoriesController = new CategoriesController(categories);
 
 // inittializing Routers
 const usersRouter = new UsersRouter(usersController, checkJwt).routes();
 const listingsRouter = new ListingsRouter(
   listingsController,
+  checkJwt
+).routes();
+const categoriesRouter = new CategoriesRouter(
+  categoriesController,
   checkJwt
 ).routes();
 
@@ -44,6 +51,8 @@ app.use(express.urlencoded({ extended: false }));
 // using the routers
 app.use("/users", usersRouter);
 app.use("/listings", listingsRouter);
+app.use("/categories", categoriesRouter);
+
 // Auth0 Route that requires authentication:
 app.get("/api/private", checkJwt, function (req, res) {
   res.json({

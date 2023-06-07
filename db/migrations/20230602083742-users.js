@@ -25,7 +25,7 @@ module.exports = {
       },
       phone_number: {
         allowNull: false,
-        unique: true,
+
         type: Sequelize.STRING,
       },
       buyer_address: {
