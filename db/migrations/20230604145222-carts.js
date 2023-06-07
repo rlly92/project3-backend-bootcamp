@@ -2,14 +2,40 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("listings", {
+    await queryInterface.createTable("carts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      buyer_id: {
+      listing_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "listings",
+          key: "id",
+        },
+      },
+
+      // NOT NECESSARY? BUT JUST LEAVE HERE FIRST, I WILL CLEAR IT LATER:
+      // price: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      // },
+      // quantity: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      // },
+      // shipping_cost: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      // },
+      // total_price: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      // },
+      user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -17,41 +43,9 @@ module.exports = {
           key: "id",
         },
       },
-      seller_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-      },
-      title: {
+      status: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      price: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      description: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      shipping_cost: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      shipping_detail: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      sku_number: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      quantity: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -65,6 +59,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("listings");
+    await queryInterface.dropTable("carts");
   },
 };
