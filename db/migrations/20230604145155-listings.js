@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
 
-      seller_id: {
+      user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -37,6 +37,7 @@ module.exports = {
       },
       sku_number: {
         allowNull: false,
+
         type: Sequelize.STRING,
       },
       quantity: {

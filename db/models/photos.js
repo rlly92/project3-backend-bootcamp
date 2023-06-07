@@ -2,10 +2,10 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Photos extends Model {
-    static associate(models) {
-      // define association here
-      Photos.belongsTo(models.listings);
-    }
+    // static associate(models) {
+    //   // define association here
+    //   Photos.belongsTo(models.listings);
+    // }
   }
   Photos.init(
     {

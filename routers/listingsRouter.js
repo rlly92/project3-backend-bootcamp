@@ -3,6 +3,7 @@ const router = express.Router();
 
 class ListingsRouter {
   constructor(controller, checkJwt) {
+    // checkJwt; <----------add back next to controller in constructor later
     this.controller = controller;
     this.checkJwt = checkJwt;
   }
@@ -10,8 +11,10 @@ class ListingsRouter {
   routes() {
     router.use(this.checkJwt);
     router.get("/", this.controller.getAllListings.bind(this.controller));
+
+    // COMMENT: routes with /:seller_id will always be the last. order matters since anything after /:params routes will assume that thing is a param.
     router.post(
-      "/:seller_id",
+      "/:user_id",
       this.controller.createListing.bind(this.controller)
     );
 
