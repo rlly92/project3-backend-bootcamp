@@ -12,10 +12,7 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      password: {
-        allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
       },
       first_name: {
@@ -27,12 +24,16 @@ module.exports = {
         type: Sequelize.STRING,
       },
       phone_number: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
       },
       buyer_address: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       seller_address: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       created_at: {

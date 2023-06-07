@@ -21,12 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         allowNull: false,
+        unique: true,
         type: DataTypes.STRING,
       },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
+
       first_name: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -36,21 +34,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       phone_number: {
+        allowNull: false,
+        unique: true,
         type: DataTypes.STRING,
       },
       buyer_address: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       seller_address: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: new Date(),
       },
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {
