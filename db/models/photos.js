@@ -2,10 +2,10 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Photos extends Model {
-    // static associate(models) {
-    //   // define association here
-    //   Photos.belongsTo(models.listings);
-    // }
+    static associate(models) {
+      // define association here
+      Photos.belongsTo(models.listings);
+    }
   }
   Photos.init(
     {
@@ -17,10 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       url_link: {
         allowNull: false,
+        unique: true,
         type: DataTypes.STRING,
-      },
-      photo_order: {
-        type: DataTypes.INTEGER,
       },
 
       listing_id: {
@@ -30,17 +28,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "listings",
           key: "id",
         },
-      },
-
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: new Date(),
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: new Date(),
       },
     },
     {

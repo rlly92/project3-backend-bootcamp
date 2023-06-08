@@ -17,6 +17,10 @@ class ListingsRouter {
       "/:user_id",
       this.controller.createListing.bind(this.controller)
     );
+    router.delete(
+      "/:listing_id",
+      this.controller.deleteListing.bind(this.controller)
+    );
 
     return router;
   }

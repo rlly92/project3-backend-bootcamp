@@ -2,15 +2,15 @@ const BaseController = require("./baseController");
 const { Op } = require("sequelize");
 
 class ListingsController extends BaseController {
-  constructor(model, users, category) {
+  constructor(model, categories, users) {
     super(model);
     this.usersModel = users;
-    this.categoryModel = category;
+    this.categoriesModel = categories;
   }
 
   // Retrieve ALL Listings
   async getAllListings(req, res) {
-    console.log("HELLO IS ANYTHING WORKING?");
+    console.log("IS getAllListings WORKING?");
     try {
       const listings = await this.model.findAll();
       return res.json(listings);
@@ -18,7 +18,7 @@ class ListingsController extends BaseController {
       return res.status(400).json({ error: true, msg: err });
     }
   }
-  // create NEW Listings with category association and photo URL association
+  // create NEW Listings with category association:
   async createListing(req, res) {
     console.log("is CreateListing even working?");
     try {
@@ -30,6 +30,9 @@ class ListingsController extends BaseController {
         sku_number,
         quantity,
         selectedCategoryIDs,
+        photo_url_1,
+        photo_url_2,
+        photo_url_3,
       } = req.body;
       const { user_id } = req.params;
 
@@ -41,10 +44,13 @@ class ListingsController extends BaseController {
         shipping_detail: shipping_detail,
         sku_number: sku_number,
         quantity: quantity,
+        photo_url_1: photo_url_1,
+        photo_url_2: photo_url_2,
+        photo_url_3: photo_url_3,
       });
-
-      // retrieve the selected categories by using the selectedCategoryIds from the JSON body
-      const selectedCategories = await this.categoryModel.findAll({
+      console.log(this.categoriesModel);
+      // // retrieve the selected categories by using the selectedCategoryIds from the JSON body
+      const selectedCategories = await this.categoriesModel.findAll({
         where: {
           id: {
             [Op.or]: selectedCategoryIDs,
@@ -63,7 +69,7 @@ class ListingsController extends BaseController {
       //Promise.all and .map allows for the extraction of categories (from array SelectedCategories) and the subsequent association of those categories with listings to be performed at the same time:
       await Promise.all(
         selectedCategories.map(async (category) => {
-          await newListing.setCategories(category);
+          await newListing.addCategory(category);
         })
       );
 
@@ -74,15 +80,66 @@ class ListingsController extends BaseController {
     }
   }
 
-  // DELETE Listing:
+  // DELETE Listing: GET THE CORRECT LISTING ID FIRST THEN REMOVE ASSOCIATION TO CATEGORY THEN DELETE LISTING:
   async deleteListing(req, res) {
+    // METHOD A:
+
+    //   console.log("IS deleteListing EVEN WORKING?");
+    //   try {
+    //     // Get listing ID via params first (the ListingID is provided via a route parameter)
+    //     const { listingID } = req.params;
+    //     // Pick out the correct listing: "findOne" method with the specified listingID:
+    //     const listingToDelete = await this.model.findOne({
+    //       where: { id: listingID },
+    //       include: [{ model: this.categoriesModel }], // Include the associated categories
+    //     });
+
+    //     if (!listingToDelete) {
+    //       return res
+    //         .status(404)
+    //         .json({ error: true, msg: "listingToDelete not found" });
+    //     }
+
+    //     // Remove the associations between listing and categories
+    //     await listingToDelete.removeCategories(listingToDelete.Categories);
+
+    //     // Delete the listing
+    //     await this.model.destroy({
+    //       where: { id: listingID },
+    //     });
+
+    //     console.log("Deleted listing:", listingToDelete);
+
+    //     return res.json({ success: true, msg: "Listing deleted successfully" });
+    //   } catch (err) {
+    //     return res.status(400).json({ error: true, msg: err });
+    //   }
+    // }
+
+    //  METHOD B:
+    console.log("IS deleteListing EVEN WORKING?");
     try {
-      const count = await this.model.destroy({
-        where: { id: "insert params id here" },
+      // Get listing ID from params
+      const { listing_id } = req.params;
+      const listingToDelete = await this.model.findByPk(listing_id, {
+        include: this.categoriesModel,
       });
-      console.log("deleted successfully:", count);
-      // do we need a response here? since on the front end, user will just hit delete button and be immediately routed back to listings page.
-      return res.json(count);
+
+      if (!listingToDelete) {
+        return res.status(404).json({ error: true, msg: "Listing not found" });
+      }
+
+      // Remove the associations between listing and categories
+      const removeAssociation = await listingToDelete.setCategories([]);
+      console.log("Association has been removed:", removeAssociation);
+      // Delete the listing
+      const deleteListing = await this.model.destroy({
+        where: { id: listing_id },
+      });
+
+      console.log("Listing deleted:", listing_id, deleteListing);
+
+      return res.json({ success: true, msg: "Listing deleted successfully" });
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
     }

@@ -25,7 +25,7 @@ const { users, listings, categories } = db;
 
 // initializing Controllers -> note the lowercase for the first word
 const usersController = new UsersController(users);
-const listingsController = new ListingsController(listings);
+const listingsController = new ListingsController(listings, categories, users);
 const categoriesController = new CategoriesController(categories);
 
 // inittializing Routers

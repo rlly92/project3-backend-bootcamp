@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
       // Listings.belongsTo(models.carts);
       Listings.belongsTo(models.users);
-      // Listings.hasMany(models.photos);
+      Listings.hasMany(models.photos);
       // Listings.hasMany(models.reviews);
       Listings.belongsToMany(models.categories, {
         through: "listings_categories",
@@ -57,15 +57,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: new Date(),
+      photo_url_1: {
+        allowNull: true,
+        type: DataTypes.STRING,
       },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: new Date(),
+      photo_url_2: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      photo_url_3: {
+        allowNull: true,
+        type: DataTypes.STRING,
       },
     },
     {

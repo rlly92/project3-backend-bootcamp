@@ -44,6 +44,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
+      photo_url_1: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      photo_url_2: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      photo_url_3: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

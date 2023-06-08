@@ -12,11 +12,10 @@ module.exports = {
       },
       url_link: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
       },
-      photo_order: {
-        type: Sequelize.INTEGER,
-      },
+
       listing_id: {
         type: Sequelize.INTEGER,
         references: {
