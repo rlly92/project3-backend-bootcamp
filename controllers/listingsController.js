@@ -23,6 +23,7 @@ class ListingsController extends BaseController {
     console.log("is CreateListing even working?");
     try {
       const {
+        user_id,
         title,
         price,
         description,
@@ -34,7 +35,6 @@ class ListingsController extends BaseController {
         photo_url_2,
         photo_url_3,
       } = req.body;
-      const { user_id } = req.params;
 
       const newListing = await this.model.create({
         user_id: user_id,
