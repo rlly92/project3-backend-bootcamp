@@ -82,40 +82,6 @@ class ListingsController extends BaseController {
 
   // DELETE Listing: GET THE CORRECT LISTING ID FIRST THEN REMOVE ASSOCIATION TO CATEGORY THEN DELETE LISTING:
   async deleteListing(req, res) {
-    // METHOD A:
-
-    //   console.log("IS deleteListing EVEN WORKING?");
-    //   try {
-    //     // Get listing ID via params first (the ListingID is provided via a route parameter)
-    //     const { listingID } = req.params;
-    //     // Pick out the correct listing: "findOne" method with the specified listingID:
-    //     const listingToDelete = await this.model.findOne({
-    //       where: { id: listingID },
-    //       include: [{ model: this.categoriesModel }], // Include the associated categories
-    //     });
-
-    //     if (!listingToDelete) {
-    //       return res
-    //         .status(404)
-    //         .json({ error: true, msg: "listingToDelete not found" });
-    //     }
-
-    //     // Remove the associations between listing and categories
-    //     await listingToDelete.removeCategories(listingToDelete.Categories);
-
-    //     // Delete the listing
-    //     await this.model.destroy({
-    //       where: { id: listingID },
-    //     });
-
-    //     console.log("Deleted listing:", listingToDelete);
-
-    //     return res.json({ success: true, msg: "Listing deleted successfully" });
-    //   } catch (err) {
-    //     return res.status(400).json({ error: true, msg: err });
-    //   }
-    // }
-
     //  METHOD B:
     console.log("IS deleteListing EVEN WORKING?");
     try {

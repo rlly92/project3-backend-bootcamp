@@ -1,3 +1,5 @@
+// PLEASE DELETE THIS FILE BEFORE PRODUCTION: IT IS NO LONGER NEEDED/HAS BEEN DEPRECATED:
+
 // const BaseController = require("./baseController");
 
 // class PhotosController extends BaseController {
