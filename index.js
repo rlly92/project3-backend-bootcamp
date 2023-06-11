@@ -13,20 +13,23 @@ const checkJwt = auth({
 const UsersRouter = require("./routers/usersRouter");
 const ListingsRouter = require("./routers/listingsRouter");
 const CategoriesRouter = require("./routers/categoriesRouter");
+const CartsRouter = require("./routers/cartsRouter");
 
 // importing Controllers
 const UsersController = require("./controllers/usersController");
 const ListingsController = require("./controllers/listingsController");
 const CategoriesController = require("./controllers/categoriesController");
+const CartsController = require("./controllers/cartsController");
 
 // importing DB
 const db = require("./db/models/index");
-const { users, listings, categories } = db;
+const { users, listings, categories, carts } = db;
 
 // initializing Controllers -> note the lowercase for the first word
 const usersController = new UsersController(users);
 const listingsController = new ListingsController(listings, categories, users);
 const categoriesController = new CategoriesController(categories);
+const cartsController = new CartsController(carts, listings, users);
 
 // inittializing Routers
 const usersRouter = new UsersRouter(usersController, checkJwt).routes();
@@ -38,6 +41,7 @@ const categoriesRouter = new CategoriesRouter(
   categoriesController,
   checkJwt
 ).routes();
+const cartsRouter = new CartsRouter(cartsController, checkJwt).routes();
 
 // Define PORT and wrap app in express:
 const PORT = process.env.PORT;
@@ -52,6 +56,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/users", usersRouter);
 app.use("/listings", listingsRouter);
 app.use("/categories", categoriesRouter);
+app.use("/carts", cartsRouter);
 
 // Auth0 Route that requires authentication:
 app.get("/api/private", checkJwt, function (req, res) {
