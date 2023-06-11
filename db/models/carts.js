@@ -25,14 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      listing_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: "listings",
-          key: "id",
-        },
-      },
+
       user_id: {
         allowNull: false,
         type: DataTypes.INTEGER,

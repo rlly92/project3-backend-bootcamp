@@ -10,10 +10,10 @@ class CartsRouter {
 
   routes() {
     router.use(this.checkJwt);
-    router.get("/", this.controller.getAllCategories.bind(this.controller));
+    router.post("/create", this.controller.createNewCart.bind(this.controller));
     router.put(
       "/changecartstatus",
-      this.controller.createNewCategory.bind(this.controller)
+      this.controller.updateCartStatus.bind(this.controller)
     );
 
     // COMMENT: routes with /:params_id will always be the last. order matters since anything after /:params routes will assume that thing is a param.

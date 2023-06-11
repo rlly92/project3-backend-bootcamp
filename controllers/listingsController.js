@@ -18,6 +18,21 @@ class ListingsController extends BaseController {
       return res.status(400).json({ error: true, msg: err });
     }
   }
+
+  // Retrieve ONE SPECIFIC Listing
+  async getOneListing(req, res) {
+    console.log("IS getOneListing WORKING?");
+    try {
+      const { listing_id } = req.params;
+      const listing = await this.model.findOne({
+        where: { id: listing_id },
+      });
+      return res.json(listing);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
+
   // create NEW Listings with category association:
   async createListing(req, res) {
     console.log("is CreateListing even working?");
