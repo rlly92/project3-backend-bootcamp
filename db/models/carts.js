@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Carts.hasMany(models.carts_listings);
 
       Carts.belongsTo(models.users);
       Carts.belongsToMany(models.listings, {

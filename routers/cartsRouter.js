@@ -15,6 +15,14 @@ class CartsRouter {
       "/changecartstatus",
       this.controller.updateCartStatus.bind(this.controller)
     );
+    router.get(
+      "/checkforactivecart",
+      this.controller.checkForActiveCart.bind(this.controller)
+    );
+    router.get(
+      "/checkforcheckedoutcart",
+      this.controller.checkForCheckedOutCart.bind(this.controller)
+    );
 
     // COMMENT: routes with /:params_id will always be the last. order matters since anything after /:params routes will assume that thing is a param.
 

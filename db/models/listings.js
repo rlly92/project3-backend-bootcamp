@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Listings.belongsToMany(models.carts, {
         through: "carts_listings",
       });
+      // Listings.hasMany(models.carts_listings);
     }
   }
   Listings.init(
