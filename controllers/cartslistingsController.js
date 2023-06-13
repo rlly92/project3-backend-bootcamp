@@ -73,7 +73,7 @@ class CartslistingsController extends BaseController {
   async updateItemQty(req, res) {
     try {
       console.log("IS UPDATE ITEM QTY ROUTE WORKING?");
-      const { added_quantity, id } = req.body;
+      const { added_quantity, id, subtotal_price } = req.body;
       // Find the listing associated with the cart item
       const cartItem = await this.model.findByPk(id);
       console.log(cartItem);
@@ -103,7 +103,7 @@ class CartslistingsController extends BaseController {
 
       // find the ID of the cart and update status:
       const updateQty = await this.model.update(
-        { added_quantity },
+        { added_quantity, subtotal_price },
         { where: { id: id } }
       );
       console.log(updateQty);
