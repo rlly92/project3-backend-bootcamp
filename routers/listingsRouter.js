@@ -14,8 +14,14 @@ class ListingsRouter {
 
     // COMMENT: routes with /:seller_id will always be the last. order matters since anything after /:params routes will assume that thing is a param.
     router.post("/create", this.controller.createListing.bind(this.controller));
+
+    router.get(
+      "/getlisting/:listing_id",
+      this.controller.getOneListing.bind(this.controller)
+    );
+
     router.delete(
-      "/:listing_id",
+      "/deletelisting/:listing_id",
       this.controller.deleteListing.bind(this.controller)
     );
 

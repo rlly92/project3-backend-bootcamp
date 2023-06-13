@@ -8,11 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    // static associate(models) {
-    //   // define association here
-    //   Carts.hasMany(models.listings);
-    //   Carts.belongsTo(models.users);
-    // }
+    static associate(models) {
+      // define association here
+      // Carts.hasMany(models.carts_listings);
+
+      Carts.belongsTo(models.users);
+      Carts.belongsToMany(models.listings, {
+        through: "carts_listings",
+      });
+    }
   }
   Carts.init(
     {
@@ -22,14 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      listing_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: "listings",
-          key: "id",
-        },
-      },
+
       user_id: {
         allowNull: false,
         type: DataTypes.INTEGER,

@@ -5,10 +5,10 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     static associate(models) {
-      //   // define association here
+      // define association here
       Users.hasMany(models.listings);
-      //   Users.hasMany(models.reviews);
-      //   Users.hasMany(models.carts);
+
+      Users.hasMany(models.carts);
     }
   }
   Users.init(

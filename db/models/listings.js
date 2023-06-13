@@ -7,11 +7,13 @@ module.exports = (sequelize, DataTypes) => {
 
       // Listings.belongsTo(models.carts);
       Listings.belongsTo(models.users);
-      Listings.hasMany(models.photos);
-      // Listings.hasMany(models.reviews);
       Listings.belongsToMany(models.categories, {
         through: "listings_categories",
       });
+      Listings.belongsToMany(models.carts, {
+        through: "carts_listings",
+      });
+      // Listings.hasMany(models.carts_listings);
     }
   }
   Listings.init(
