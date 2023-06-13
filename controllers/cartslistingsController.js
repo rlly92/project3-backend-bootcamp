@@ -113,7 +113,7 @@ class CartslistingsController extends BaseController {
     }
   }
 
-  // LOGIC FOR GETTING ALL THE LINE ITEMS IN A GIVEN SPECIFIC CART (WHEN USER ACCESSES THE 'YOUR CART' PAGE ON FE):
+  // LOGIC FOR GETTING ALL THE LINE ITEMS IN A GIVEN SPECIFIC CART (e.g. WHEN USER ACCESSES THE 'YOUR CART' PAGE ON FE):
   async getAllLineItems(req, res) {
     try {
       console.log("IS UPDATE CART ROUTE WORKING?");

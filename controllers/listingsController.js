@@ -139,6 +139,22 @@ class ListingsController extends BaseController {
       return res.status(400).json({ error: true, msg: err });
     }
   }
+
+  // RETREIVE ALL THE LISTINGS MADE BY A SPECFIC PARTICULAR USER:
+  async getAllListingsByThisUser(req, res) {
+    try {
+      console.log("IS getAllListingsByThisUser ROUTE WORKING?");
+      const { userID } = req.body;
+
+      const getAllListingsMadeByThisUser = await this.model.findAll({
+        where: { user_id: userID },
+      });
+      console.log(getAllListingsMadeByThisUser);
+      return res.json(getAllListingsMadeByThisUser);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
 }
 
 module.exports = ListingsController;

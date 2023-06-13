@@ -19,6 +19,10 @@ class ListingsRouter {
       "/getlisting/:listing_id",
       this.controller.getOneListing.bind(this.controller)
     );
+    router.post(
+      "/getalllistingsbythisuser",
+      this.controller.getAllListingsByThisUser.bind(this.controller)
+    );
 
     router.delete(
       "/deletelisting/:listing_id",
