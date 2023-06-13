@@ -48,10 +48,10 @@ class CartslistingsController extends BaseController {
       console.log("IS deleteItemFromCart EVEN WORKING?");
 
       // Get the listing ID from the request body
-      const { id } = req.body;
+      const { cartListingId } = req.body;
 
       // Find the item to delete from the cart
-      const itemToDelete = await this.model.findByPk(id);
+      const itemToDelete = await this.model.findByPk(cartListingId);
 
       if (!itemToDelete) {
         return res.status(404).json({ error: true, msg: "Item not found" });
@@ -60,7 +60,7 @@ class CartslistingsController extends BaseController {
       // Delete the item from the cart
       await itemToDelete.destroy();
 
-      console.log("Item deleted:", id);
+      console.log("Item deleted:", cartListingId);
 
       return res.json({ success: true, msg: "Item deleted successfully" });
     } catch (err) {
@@ -120,7 +120,7 @@ class CartslistingsController extends BaseController {
       const { cartID } = req.body;
       // find the ID of the cart and update status:
       const getItemsToDisplayOnCartPage = await this.model.findAll({
-        where: { id: cartID },
+        where: { cart_id: cartID },
       });
       console.log(getItemsToDisplayOnCartPage);
       return res.json(getItemsToDisplayOnCartPage);
