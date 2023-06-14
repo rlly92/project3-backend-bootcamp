@@ -78,30 +78,34 @@ class CartsController extends BaseController {
       );
       console.log(updateCart);
       if (status === "checked out") {
-        const findCartListingID = await this.cartsListingsModel.findOne({
+        const findCartListingIDs = await this.cartsListingsModel.findAll({
           where: {
             cart_id: cartID,
           },
         });
-        console.log(findCartListingID.added_quantity);
-        const findListing = await this.listingsModel.findOne({
-          where: {
-            id: findCartListingID.listing_id,
-          },
-        });
-        console.log(findListing.quantity);
-        const deleteAddedQuantityFromListingQuantity =
-          findListing.quantity - findCartListingID.added_quantity;
-        console.log(deleteAddedQuantityFromListingQuantity);
-        const updateListingQty = await this.listingsModel.update(
-          {
-            quantity: deleteAddedQuantityFromListingQuantity,
-          },
-          { where: { id: findCartListingID.listing_id } }
-        );
-        console.log(updateListingQty);
-      }
 
+        const updateListingPromises = findCartListingIDs.map(
+          async (cartListing) => {
+            const findListing = await this.listingsModel.findOne({
+              where: {
+                id: cartListing.listing_id,
+              },
+            });
+            console.log(findListing.quantity);
+            const deleteAddedQuantityFromListingQuantity =
+              findListing.quantity - cartListing.added_quantity;
+            console.log(deleteAddedQuantityFromListingQuantity);
+            const updateListingQty = await this.listingsModel.update(
+              {
+                quantity: deleteAddedQuantityFromListingQuantity,
+              },
+              { where: { id: cartListing.listing_id } }
+            );
+            console.log(updateListingQty);
+          }
+        );
+        await Promise.all(updateListingPromises);
+      }
       return res.json(updateCart);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
