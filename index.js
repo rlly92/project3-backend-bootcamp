@@ -31,7 +31,12 @@ const { users, listings, categories, carts, carts_listings } = db;
 const usersController = new UsersController(users);
 const listingsController = new ListingsController(listings, categories, users);
 const categoriesController = new CategoriesController(categories);
-const cartsController = new CartsController(carts, listings, users);
+const cartsController = new CartsController(
+  carts,
+  listings,
+  users,
+  carts_listings
+);
 const cartslistingsController = new CartslistingsController(
   carts_listings,
   carts,

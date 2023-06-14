@@ -1,9 +1,10 @@
 const BaseController = require("./baseController");
 
 class CartsController extends BaseController {
-  constructor(model, listings, users) {
+  constructor(model, listings, users, carts_listings) {
     super(model);
     this.listingsModel = listings;
+    this.cartsListingsModel = carts_listings;
     this.usersModel = users;
   }
 
@@ -64,6 +65,7 @@ class CartsController extends BaseController {
 
   // AFTER CHECKOUT: THIS IS THE PUT REQUEST TO UPDATE THE STATUS OF THE CART:
   // NOTE TO SELF: The cartID in this instance might have to be sent via the params instead of the body, depending on FE logic.
+  // TAKE NOTE: updateCartStatus only happens when USER CHECKS OUT which would then stand to reason why the lising qty is updated as shown in this async block below:
   async updateCartStatus(req, res) {
     try {
       console.log("IS UPDATE CART ROUTE WORKING?");
@@ -75,6 +77,31 @@ class CartsController extends BaseController {
         { where: { id: cartID } }
       );
       console.log(updateCart);
+      if (status === "checked out") {
+        const findCartListingID = await this.cartsListingsModel.findOne({
+          where: {
+            cart_id: cartID,
+          },
+        });
+        console.log(findCartListingID.added_quantity);
+        const findListing = await this.listingsModel.findOne({
+          where: {
+            id: findCartListingID.listing_id,
+          },
+        });
+        console.log(findListing.quantity);
+        const deleteAddedQuantityFromListingQuantity =
+          findListing.quantity - findCartListingID.added_quantity;
+        console.log(deleteAddedQuantityFromListingQuantity);
+        const updateListingQty = await this.listingsModel.update(
+          {
+            quantity: deleteAddedQuantityFromListingQuantity,
+          },
+          { where: { id: findCartListingID.listing_id } }
+        );
+        console.log(updateListingQty);
+      }
+
       return res.json(updateCart);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
